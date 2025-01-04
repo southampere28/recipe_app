@@ -83,6 +83,141 @@ class RecipesProvider with ChangeNotifier {
         rating: 4.9,
         mealType: ["Snack", "Dessert"],
         image: "https://cdn.dummyjson.com/recipe-images/3.webp"),
+    Recipe(
+        name: "Chicken Alfredo Pasta",
+        ingredients: [
+        "Fettuccine pasta",
+        "Chicken breast, sliced",
+        "Heavy cream",
+        "Parmesan cheese, grated",
+        "Garlic, minced",
+        "Butter",
+        "Salt and pepper to taste",
+        "Fresh parsley for garnish"
+    ],
+        instructions: [
+        "Cook fettuccine pasta according to package instructions.",
+        "In a pan, sauté sliced chicken in butter until fully cooked.",
+        "Add minced garlic and cook until fragrant.",
+        "Pour in heavy cream and grated Parmesan cheese. Stir until the cheese is melted.",
+        "Season with salt and pepper to taste.",
+        "Combine the Alfredo sauce with cooked pasta.",
+        "Garnish with fresh parsley before serving."
+    ],
+        cookTimeMinutes: 20,
+        difficulty: "Medium",
+        calories: 500,
+        rating: 4.9,
+        mealType: ["Lunch", "Dinner"],
+        image: "https://cdn.dummyjson.com/recipe-images/4.webp"),
+    Recipe(
+        name: "Mango Salsa Chicken",
+        ingredients: [
+        "Chicken thighs",
+        "Mango, diced",
+        "Red onion, finely chopped",
+        "Cilantro, chopped",
+        "Lime juice",
+        "Jalapeño, minced",
+        "Salt and pepper to taste",
+        "Cooked rice for serving"
+    ],
+        instructions: [
+        "Season chicken thighs with salt and pepper.",
+        "Grill or bake chicken until fully cooked.",
+        "In a bowl, combine diced mango, chopped red onion, cilantro, minced jalapeño, and lime juice.",
+        "Dice the cooked chicken and mix it with the mango salsa.",
+        "Serve over cooked rice."
+    ],
+        cookTimeMinutes: 25,
+        difficulty: "Medium",
+        calories: 380,
+        rating: 4.9,
+        mealType: ["Dinner"],
+        image: "https://cdn.dummyjson.com/recipe-images/5.webp"),
+    Recipe(
+        name: "Quinoa Salad with Avocado",
+        ingredients: [
+        "Quinoa, cooked",
+        "Avocado, diced",
+        "Cherry tomatoes, halved",
+        "Cucumber, diced",
+        "Red bell pepper, diced",
+        "Feta cheese, crumbled",
+        "Lemon vinaigrette dressing",
+        "Salt and pepper to taste"
+    ],
+        instructions: [
+        "In a large bowl, combine cooked quinoa, diced avocado, halved cherry tomatoes, diced cucumber, diced red bell pepper, and crumbled feta cheese.",
+        "Drizzle with lemon vinaigrette dressing and toss to combine.",
+        "Season with salt and pepper to taste.",
+        "Chill in the refrigerator before serving."
+    ],
+        cookTimeMinutes: 15,
+        difficulty: "Easy",
+        calories: 280,
+        rating: 4.4,
+        mealType: [
+        "Lunch",
+        "Side Dish"
+    ],
+        image: "https://cdn.dummyjson.com/recipe-images/6.webp"),
+    Recipe(
+        name: "Tomato Basil Bruschetta",
+        ingredients: [
+        "Baguette, sliced",
+        "Tomatoes, diced",
+        "Fresh basil, chopped",
+        "Garlic cloves, minced",
+        "Balsamic glaze",
+        "Olive oil",
+        "Salt and pepper to taste"
+    ],
+        instructions: [
+        "Preheat the oven to 375°F (190°C).",
+        "Place baguette slices on a baking sheet and toast in the oven until golden brown.",
+        "In a bowl, combine diced tomatoes, chopped fresh basil, minced garlic, and a drizzle of olive oil.",
+        "Season with salt and pepper to taste.",
+        "Top each toasted baguette slice with the tomato-basil mixture.",
+        "Drizzle with balsamic glaze before serving."
+    ],
+        cookTimeMinutes: 10,
+        difficulty: "Easy",
+        calories: 120,
+        rating: 4.7,
+        mealType: [
+        "Appetizer"
+    ],
+        image: "https://cdn.dummyjson.com/recipe-images/7.webp"),
+    Recipe(
+        name: "Beef and Broccoli Stir-Fry",
+        ingredients: [
+        "Beef sirloin, thinly sliced",
+        "Broccoli florets",
+        "Soy sauce",
+        "Oyster sauce",
+        "Sesame oil",
+        "Garlic, minced",
+        "Ginger, minced",
+        "Cornstarch",
+        "Cooked white rice for serving"
+    ],
+        instructions: [
+        "In a bowl, mix soy sauce, oyster sauce, sesame oil, and cornstarch to create the sauce.",
+        "In a wok, stir-fry thinly sliced beef until browned. Remove from the wok.",
+        "Stir-fry broccoli florets, minced garlic, and minced ginger in the same wok.",
+        "Add the cooked beef back to the wok and pour the sauce over the mixture.",
+        "Stir until everything is coated and heated through.",
+        "Serve over cooked white rice."
+    ],
+        cookTimeMinutes: 15,
+        difficulty: "Medium",
+        calories: 380,
+        rating: 4.7,
+        mealType: [
+        "Dinner"
+    ],
+        image: "https://cdn.dummyjson.com/recipe-images/8.webp"),
   ];
 
   final List<Recipe> _bookmarkedRecipes = [];
