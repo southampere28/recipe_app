@@ -54,7 +54,7 @@ class MainPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.person_sharp, size: 80),
-                  Text('My Name'),
+                  Text('Pramudya Putra'),
                 ],
               ),
             ),
