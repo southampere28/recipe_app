@@ -1,128 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipes_app/models/recipe.dart';
-import 'package:recipes_app/pages/detail_recipe.dart';
 import 'package:recipes_app/provider/recipe_provider.dart';
 import 'package:recipes_app/theme.dart';
+import 'package:recipes_app/widget/card_recipe.dart';
 
 class BookmarkPage extends StatelessWidget {
   const BookmarkPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    Size screenSize = MediaQuery.of(context).size;
     RecipesProvider recipesProvider = Provider.of<RecipesProvider>(context);
 
-    return ListView(
-      scrollDirection: Axis.vertical,
-      children: [
-        const SizedBox(
-          height: 30,
-        ),
-        const Text('Note: Recipe that you save'),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: recipesProvider.bookmarkedRecipes.length,
-          itemBuilder: (context, index) {
-            Recipe recipe = recipesProvider.bookmarkedRecipes[index];
+    double calculateCardWidth() {
+      if (screenSize.width >= 1280) {
+        return screenSize.width / 4 - 8;
+      } else if (screenSize.width >= 1024) {
+        return screenSize.width / 3 - 8;
+      } else {
+        return screenSize.width / 2 - 8;
+      }
+    }
 
-            return GestureDetector(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailRecipe(recipe: recipe))),
-              child: Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: liteblueColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            recipe.name,
-                            maxLines: 2,
-                            style: blackTextStyle.copyWith(
-                                fontSize: 14, fontWeight: bold),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text('rating :${recipe.rating}'),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                  child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                      Icons.local_fire_department_outlined),
-                                  Text(
-                                    recipe.calories.toString(),
-                                  ),
-                                  Container(
-                                    height: 2,
-                                    width: 2,
-                                    color: Colors.black,
-                                  )
-                                ],
-                              )),
-                              Expanded(
-                                  child: Text(
-                                recipe.cookTimeMinutes.toString(),
-                              )),
-                              Expanded(
-                                  child: Text(
-                                recipe.difficulty,
-                              )),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        recipe.image,
-                        height: 60,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        (loadingProgress.expectedTotalBytes ??
-                                            1)
-                                    : null,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+    double calculateIpad() {
+      if (screenSize.width >= 600) {
+        return screenSize.width / 2 - 8;
+      } else {
+        return screenSize.width;
+      }
+    }
+
+    return recipesProvider.bookmarkedRecipes.isEmpty
+        ? Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'No Data, Go back to homepage to add some :)',
+                style:
+                    blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
+                textAlign: TextAlign.center,
               ),
-            );
-          },
-        )
-      ],
-    );
+            ),
+          )
+        : orientation == Orientation.landscape
+            ? SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                  child: Wrap(
+                    spacing: 4,
+                    runSpacing: 4,
+                    children: recipesProvider.bookmarkedRecipes.map((recipe) {
+                      return SizedBox(
+                        width: calculateCardWidth(),
+                        child: CardRecipe(recipe: recipe),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                  child: Wrap(
+                    spacing: 4,
+                    runSpacing: 4,
+                    children: recipesProvider.bookmarkedRecipes.map((recipe) {
+                      return SizedBox(
+                        width: calculateIpad(),
+                        child: CardRecipe(recipe: recipe),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              );
   }
 }
