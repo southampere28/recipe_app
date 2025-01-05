@@ -32,7 +32,7 @@ class CardRecipe extends StatelessWidget {
                 children: [
                   Text(
                     recipe.name,
-                    maxLines: 2,
+                    maxLines: 1,
                     style:
                         blackTextStyle.copyWith(fontSize: 14, fontWeight: bold),
                     overflow: TextOverflow.ellipsis,
@@ -81,8 +81,11 @@ class CardRecipe extends StatelessWidget {
                           const SizedBox(
                             width: 4,
                           ),
-                          Text(
-                            '${recipe.cookTimeMinutes}min',
+                          Expanded(
+                            child: Text(
+                              '${recipe.cookTimeMinutes}min',
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       )),
@@ -97,8 +100,11 @@ class CardRecipe extends StatelessWidget {
                           const SizedBox(
                             width: 4,
                           ),
-                          Text(
-                            recipe.difficulty,
+                          Expanded(
+                            child: Text(
+                              recipe.difficulty,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       )),

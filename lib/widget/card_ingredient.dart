@@ -40,14 +40,12 @@ class CardIngredient extends StatelessWidget {
           itemCount: recipe.ingredients.length,
           itemBuilder: (context, index) {
             String ingredient = recipe.ingredients[index];
-            return Expanded(
-              child: Text(
-                "- $ingredient",
-                style: blackTextStyle.copyWith(
-                  fontSize: 14,
-                ),
-                overflow: TextOverflow.ellipsis,
+            return Text(
+              "- $ingredient",
+              style: blackTextStyle.copyWith(
+                fontSize: 14,
               ),
+              overflow: TextOverflow.ellipsis,
             );
           },
         ),

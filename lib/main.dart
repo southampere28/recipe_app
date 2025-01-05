@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PageProvider()),
       ],
       child: MaterialApp(
-        title: 'Recipe App',
+        title: 'Recipes App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

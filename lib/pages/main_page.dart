@@ -13,7 +13,7 @@ class MainPage extends StatelessWidget {
     PageProvider pageProvider = Provider.of<PageProvider>(context);
 
     final List<Widget> pages = [
-      const HomePage(), // Halaman default
+      const HomePage(),
       const BookmarkPage(),
     ];
 
@@ -48,13 +48,20 @@ class MainPage extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+            DrawerHeader(
+              decoration: const BoxDecoration(color: primaryColor),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.person_sharp, size: 80),
-                  Text('Pramudya Putra'),
+                  const Icon(
+                    Icons.person_sharp,
+                    size: 80,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    'Pramudya Putra',
+                    style: whiteTextStyle,
+                  ),
                 ],
               ),
             ),
@@ -63,11 +70,13 @@ class MainPage extends StatelessWidget {
               selected: pageProvider.currentPageIndex == 0,
               title: Text(
                 'Homepage',
-                style: blackTextStyle,
+                style: blackTextStyle.copyWith(
+                    fontWeight:
+                        pageProvider.currentPageIndex == 0 ? bold : medium),
               ),
               onTap: () {
                 pageProvider.setPage(0);
-                Navigator.pop(context); // Menutup drawer
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -75,11 +84,13 @@ class MainPage extends StatelessWidget {
               selected: pageProvider.currentPageIndex == 1,
               title: Text(
                 'Bookmark',
-                style: blackTextStyle,
+                style: blackTextStyle.copyWith(
+                    fontWeight:
+                        pageProvider.currentPageIndex == 1 ? bold : medium),
               ),
               onTap: () {
                 pageProvider.setPage(1);
-                Navigator.pop(context); // Menutup drawer
+                Navigator.pop(context);
               },
             ),
           ],
