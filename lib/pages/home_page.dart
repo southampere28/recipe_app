@@ -12,40 +12,57 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
+    Size screenSize = MediaQuery.of(context).size;
     RecipesProvider recipesProvider = Provider.of<RecipesProvider>(context);
 
-    return orientation == Orientation.landscape
-        ? GridView.builder(
-            scrollDirection: Axis.vertical,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 3 / 1, // Ubah sesuai desain Anda
-            ),
-            itemCount: recipesProvider.recipeList.length,
-            itemBuilder: (context, index) {
-              Recipe recipe = recipesProvider.recipeList[index];
-              return CardRecipe(recipe: recipe);
-            },
-          )
-        : ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: recipesProvider.recipeList.length,
-                itemBuilder: (context, index) {
-                  Recipe recipe = recipesProvider.recipeList[index];
+    double calculateCardWidth() {
+      if (screenSize.width >= 1280) {
+        return screenSize.width / 4 - 8;
+      } else if (screenSize.width >= 1024) {
+        return screenSize.width / 3 - 8;
+      } else {
+        return screenSize.width / 2 - 8;
+      }
+    }
 
-                  return CardRecipe(recipe: recipe);
-                },
-              )
-            ],
+    double calculateIpad() {
+      if (screenSize.width >= 600) {
+        return screenSize.width / 2 - 8;
+      } else {
+        return screenSize.width;
+      }
+    }
+
+    return orientation == Orientation.landscape
+        ? SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+              child: Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                children: recipesProvider.recipeList.map((recipe) {
+                  return SizedBox(
+                    width: calculateCardWidth(),
+                    child: CardRecipe(recipe: recipe),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
+        : SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+              child: Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                children: recipesProvider.recipeList.map((recipe) {
+                  return SizedBox(
+                    width: calculateIpad(),
+                    child: CardRecipe(recipe: recipe),
+                  );
+                }).toList(),
+              ),
+            ),
           );
   }
 }
