@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:recipes_app/models/recipe.dart';
 import 'package:recipes_app/provider/recipe_provider.dart';
@@ -19,6 +20,29 @@ class DetailRecipe extends StatefulWidget {
 }
 
 class _DetailRecipeState extends State<DetailRecipe> {
+  final _commentController = TextEditingController();
+  final List<Map<String, String>> _comments = <Map<String, String>>[];
+
+  void _addComment() {
+    if (_commentController.text.isNotEmpty) {
+      String formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+
+      setState(() {
+        _comments.add({
+          'comment': _commentController.text,
+          'date': formattedDate,
+        });
+        _commentController.clear();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -30,6 +54,91 @@ class _DetailRecipeState extends State<DetailRecipe> {
         : mealType.isNotEmpty
             ? mealType.first
             : 'Unknown';
+
+    Widget showComment() {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          children: [
+            // Show comments
+            Text(
+              "Comments:",
+              style: blackTextStyle.copyWith(fontSize: 16, fontWeight: bold),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            _comments.isEmpty
+                ? Container(
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: liteblueColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'No comments yet, be the first to comment',
+                        style: secondaryTextStyle.copyWith(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: _comments.map((comment) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(
+                                color: c4Color,
+                                blurRadius: 1,
+                                offset: Offset(1, 3),
+                              ),
+                            ],
+                            color: liteblueColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ListTile(
+                            subtitle: Text(comment['date'] ?? '(No Date)'),
+                            title: Text(comment['comment'] ?? '(No Comment)'),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  )
+          ],
+        ),
+      );
+    }
+
+    Widget inputComment() {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _commentController,
+                decoration: const InputDecoration(
+                  hintText: "Add a comment",
+                ),
+                maxLines: null,
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.send),
+              onPressed: _addComment,
+            ),
+          ],
+        ),
+      );
+    }
 
     Widget orientationPotrait() {
       return SafeArea(
@@ -122,10 +231,15 @@ class _DetailRecipeState extends State<DetailRecipe> {
                         CardInstructions(recipe: widget.recipe),
 
                         const SizedBox(
-                          height: 60,
+                          height: 16,
                         ),
                       ],
                     ),
+                  ),
+                  showComment(),
+                  inputComment(),
+                  const SizedBox(
+                    height: 200,
                   ),
                 ],
               ),
@@ -191,11 +305,16 @@ class _DetailRecipeState extends State<DetailRecipe> {
                             child: CardInstructions(recipe: widget.recipe)),
 
                         const SizedBox(
-                          height: 60,
+                          height: 16,
                         ),
                       ],
                     ),
                   ),
+                  showComment(),
+                  inputComment(),
+                  const SizedBox(
+                    height: 200,
+                  )
                 ],
               ),
             ),
